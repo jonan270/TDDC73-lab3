@@ -2,7 +2,7 @@ import { Text, StyleSheet, View } from 'react-native';
 
 export default function RepositoryCard(props) {
     return(
-        <View style={styles.cardView}>
+        <View style={styles.cardView} key={props.name}>
             <Text style={styles.repoTitleText}>{props.name}</Text>
             <Text style={styles.starText}>{'*: ' +  props.stars}</Text>
         </View>
