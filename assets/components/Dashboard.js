@@ -1,21 +1,32 @@
-import { Text, FlatList, Pressable, View } from 'react-native'
+import { Text, View, ScrollView } from 'react-native';
 import { useQuery } from "@apollo/client";
 import { GH_QUERY } from '../gql/Query';
+import RepositoryCard from './RepositoryCard';
 
 export default function Dashboard() {
     const { data, loading } = useQuery(GH_QUERY); //execute query
     
-    let titles;
-    if(!loading) {
-      const { search } = data;
-      titles = search.edges.map( ({ node }) => node.name);
-      console.log(titles);
-    }
-    else titles = null;
+    let search;
+    let count = 0;
+
+    if(!loading)
+      search = data.search;
 
     return loading ? (<Text>Loading...</Text>) : (
-      <View>
-        <Text>{titles}</Text>
-      </View>
+      <ScrollView style={{width: '100%'}}>
+        {
+          search.edges.map( ({ node }) => {
+          count++;
+          return count % 2 == 0 ? 
+          (
+            <RepositoryCard name={node.name}/>
+          )
+          :
+          (
+            // Add to new view?
+            <RepositoryCard name={node.name}/>
+          )
+        })}
+      </ScrollView>
     )
 }
