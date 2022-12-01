@@ -14,7 +14,14 @@ export default function Dashboard() {
       <ScrollView style={{width: '100%', flexDirection: 'column'}}>
         {
           search.edges.map( ({ node }) => {
-          return (<RepositoryCard name={node.name} stars={node.stargazers.totalCount}/>);
+          return (
+          <RepositoryCard
+            name={node.name}
+            nameWithOwner={node.nameWithOwner}
+            stars={node.stargazers.totalCount}
+            description={node.description}
+            forks={node.forkCount}
+          />);
           })}
       </ScrollView>
     )

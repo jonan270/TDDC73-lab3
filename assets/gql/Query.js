@@ -14,6 +14,9 @@ export const GH_QUERY = gql`{
                     stargazers {
                         totalCount
                     }
+                    nameWithOwner
+                    description
+                    forkCount
                 }
             }
         }
