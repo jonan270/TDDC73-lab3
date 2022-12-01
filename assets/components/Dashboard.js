@@ -7,26 +7,15 @@ export default function Dashboard() {
     const { data, loading } = useQuery(GH_QUERY); //execute query
     
     let search;
-    let count = 0;
-
     if(!loading)
       search = data.search;
 
     return loading ? (<Text>Loading...</Text>) : (
-      <ScrollView style={{width: '100%'}}>
+      <ScrollView style={{width: '100%', flexDirection: 'column'}}>
         {
           search.edges.map( ({ node }) => {
-          count++;
-          return count % 2 == 0 ? 
-          (
-            <RepositoryCard name={node.name}/>
-          )
-          :
-          (
-            // Add to new view?
-            <RepositoryCard name={node.name}/>
-          )
-        })}
+          return (<RepositoryCard name={node.name} stars={node.stargazers.totalCount}/>);
+          })}
       </ScrollView>
     )
 }
