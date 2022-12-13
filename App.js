@@ -9,7 +9,7 @@ import { GITHUB_ACCESS_TOKEN } from '@env'
 
 import {
   ApolloClient, InMemoryCache,
-  ApolloProvider, createHttpLink 
+  ApolloProvider, createHttpLink,
 } from '@apollo/client';
 
 import { setContext } from '@apollo/client/link/context';
