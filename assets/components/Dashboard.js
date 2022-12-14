@@ -56,7 +56,7 @@ export default function Dashboard() {
   if(!loading)
     search = data.search;
 
-  return loading ? (<Text>Loading...</Text>) : (
+  return loading ? (<Text style={styles.toolbarText}>Loading...</Text>) : (
     <View style={{flexDirection: 'row'}}>
       <View style={styles.container}>
         <View style={{width: '100%'}}>
@@ -92,6 +92,9 @@ export default function Dashboard() {
               stars={node.stargazers.totalCount}
               description={node.description}
               forks={node.forkCount}
+              license={node.licenseInfo}
+              object={node.object}
+              nBranches={node.refs.totalCount}
             />);
           })}
       </ScrollView>

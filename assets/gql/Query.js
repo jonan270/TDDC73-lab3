@@ -11,8 +11,21 @@ export const GH_QUERY = gql`query GH_QUERY($searchParams:String!) {
             node {
                 ... on Repository {
                     name
+                    refs(refPrefix: "refs/heads/") {
+                        totalCount
+                    }
                     stargazers {
                         totalCount
+                    }
+                    licenseInfo {
+                        name
+                    }
+                    object(expression:"master") {
+                        ... on Commit {
+                          history {
+                            totalCount
+                          }
+                        }
                     }
                     nameWithOwner
                     description
