@@ -5,8 +5,12 @@ import { GH_QUERY } from '../gql/Query';
 import RepositoryCard from './RepositoryCard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function Dashboard() {
+  DropDownPicker.setTheme("DARK");
+
+  // -- STATES HANDLING FOR CALENDAR --
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -20,14 +24,29 @@ export default function Dashboard() {
     setDate(currentDate);
     setDateFormatted(formattedDate(currentDate));
   };
+  // ---------------------------------
+
+  // -- STATES FOR DROPDOWN LANGUAGE PICKER --
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'JavaScript', value: 'JavaScript'},
+    {label: 'TypeScript', value: 'TypeScript'},
+    {label: 'Go', value: 'Go'},
+    {label: 'Rust', value: 'Rust'},
+    {label: 'Swift', value: 'Swift'},
+    {label: 'Python', value: 'Python'},
+    {label: 'Java', value: 'Java'},
+    {label: 'C', value: 'C'},
+    {label: 'C++', value: 'C++'},
+    {label: 'C#', value: 'C#'},
+  ]);
+  // -----------------------------------------
 
   // Only list repositories created after selected date
   const [dateFormatted, setDateFormatted] = useState(formattedDate(date));
 
-  // Only list repositories from selected language
-  const [language, setLanguage] = useState("Python");
-
-  let searchParams = `created:>${dateFormatted} language:${language}`;
+  let searchParams = `created:>${dateFormatted} language:${value}`;
 
   const { data, loading } = useQuery(GH_QUERY, {
     variables: { searchParams },
@@ -54,6 +73,14 @@ export default function Dashboard() {
           )}
         </View>
         <Text style={styles.toolbarText}>Language:</Text>
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+        />
       </View>
       <ScrollView style={{width: '50%', flexDirection: 'column'}}>
         {
@@ -87,5 +114,6 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     padding: 15,
+    width: '100%'
   },
 });
