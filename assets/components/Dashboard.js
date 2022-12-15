@@ -87,6 +87,7 @@ export default function Dashboard() {
           search.edges?.map( ({ node }) => {
           return (
             <RepositoryCard
+              key={node.name}
               name={node.name}
               nameWithOwner={node.nameWithOwner}
               stars={node.stargazers.totalCount}
